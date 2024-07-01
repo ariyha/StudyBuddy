@@ -1,4 +1,8 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
+import 'package:studybuddy/assignment.dart';
+import 'package:studybuddy/home.dart';
 import 'login_page.dart';
 import 'themes/theme.dart';
 
@@ -10,9 +14,10 @@ class LoginApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login Page',
+      debugShowCheckedModeBanner: false,
+      title: 'Study Buddy',
       theme: theme,
-      home: LoginPage(),
+      home: AssignmentPage(),
     );
   }
 }
