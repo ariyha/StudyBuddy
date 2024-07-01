@@ -1,56 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 /// Flutter code sample for [NavigationBar].
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+  int currentPageIndex = 0;
+
+  NavBar({
+    Key? key,
+    required this.currentPageIndex,
+  }) : super(key: key);
 
   @override
   State<NavBar> createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
-  int currentPageIndex = 0;
   NavigationDestinationLabelBehavior labelBehavior =
       NavigationDestinationLabelBehavior.alwaysShow;
 
   @override
   Widget build(BuildContext context) {
+    var items = [
+      '/',
+      '/assignment',
+      '/assignment',
+      '/assignment',
+      '/assignment'
+    ];
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0, left: 8.0, right: 8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20.0),
         child: NavigationBar(
           labelBehavior: labelBehavior,
-          selectedIndex: currentPageIndex,
+          selectedIndex: widget.currentPageIndex,
           onDestinationSelected: (int index) {
             setState(() {
-              currentPageIndex = index;
+              context.go(items[index]);
             });
           },
           destinations: const <Widget>[
             NavigationDestination(
-              icon: Icon(Icons.explore),
-              label: 'Explore',
+              icon: Icon(Icons.home_filled),
+              label: 'Home',
             ),
             NavigationDestination(
-              icon: Icon(Icons.commute),
-              label: 'Commute',
+              icon: Icon(Icons.book),
+              label: 'Assignments',
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.bookmark),
-              icon: Icon(Icons.bookmark_border),
-              label: 'Saved',
+              icon: Icon(Icons.assignment_rounded),
+              label: 'Tests',
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.bookmark),
-              icon: Icon(Icons.bookmark_border),
-              label: 'Saved',
+              icon: Icon(Icons.task_alt_rounded),
+              label: 'Tasks',
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.bookmark),
-              icon: Icon(Icons.bookmark_border),
-              label: 'Saved',
+              icon: Icon(Icons.account_circle_rounded),
+              label: 'Account',
             )
           ],
         ),

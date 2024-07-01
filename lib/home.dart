@@ -14,8 +14,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavBar(),
+      bottomNavigationBar:
+          Hero(tag: "navbar", child: NavBar(currentPageIndex: 0)),
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         title: const Text("Study Buddy"),
       ),
       body: SingleChildScrollView(

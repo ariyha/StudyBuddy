@@ -102,11 +102,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
             });
             _dropdownKey.currentState?.closeDropdown(); // Add this line
           }),
-      bottomNavigationBar: Hero(
-          tag: 'navbar',
-          child: NavBar(
-            currentPageIndex: 1,
-          )),
+      bottomNavigationBar: Hero(tag: 'navbar', child: NavBar()),
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         title: const Text("Assignments"),

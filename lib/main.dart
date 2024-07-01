@@ -1,23 +1,33 @@
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:studybuddy/Themes/theme.dart';
 import 'package:studybuddy/assignment.dart';
 import 'package:studybuddy/home.dart';
-import 'login_page.dart';
-import 'themes/theme.dart';
 
 void main() {
-  runApp(LoginApp());
+  runApp(MyApp());
 }
 
-class LoginApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  final GoRouter _router = GoRouter(
+    routes: [
+      GoRoute(
+        path: "/",
+        builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: "/assignment",
+        builder: (context, state) => const AssignmentPage(),
+      )
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Study Buddy',
+    return MaterialApp.router(
+      routerConfig: _router,
+      title: 'Flutter Navigation',
       theme: theme,
-      home: AssignmentPage(),
     );
   }
 }
