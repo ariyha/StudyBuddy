@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-/// Flutter code sample for [NavigationBar].
-
 class NavBar extends StatefulWidget {
   int currentPageIndex = 0;
 
   NavBar({
-    Key? key,
+    super.key,
     required this.currentPageIndex,
-  }) : super(key: key);
+  });
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -21,7 +19,7 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    var items = ['/', '/assignment', '/test', '/task', '/assignment'];
+    var items = ['/', '/assignment', '/test', '/task', '/account'];
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0, left: 8.0, right: 8.0),
       child: ClipRRect(
@@ -31,6 +29,7 @@ class _NavBarState extends State<NavBar> {
           selectedIndex: widget.currentPageIndex,
           onDestinationSelected: (int index) {
             setState(() {
+              widget.currentPageIndex = index;
               context.go(items[index]);
             });
           },

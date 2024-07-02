@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:studybuddy/Themes/theme.dart';
+import 'package:studybuddy/account.dart';
 import 'package:studybuddy/assignment.dart';
 import 'package:studybuddy/home.dart';
 import 'package:studybuddy/task.dart';
@@ -10,31 +11,94 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  final GoRouter _router = GoRouter(
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int _currentPageIndex = 0;
+
+  late final GoRouter _router = GoRouter(
     routes: [
       GoRoute(
-        path: "/",
-        builder: (context, state) => const HomePage(),
+        path: '/',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const HomePage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return _buildTransition(
+                context, animation, secondaryAnimation, child, 0);
+          },
+        ),
       ),
       GoRoute(
-        path: "/assignment",
-        builder: (context, state) => const AssignmentPage(),
+        path: '/assignment',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const AssignmentPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return _buildTransition(
+                context, animation, secondaryAnimation, child, 1);
+          },
+        ),
       ),
       GoRoute(
-        path: "/test",
-        builder: (context, state) => const TestPage(),
+        path: '/test',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const TestPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return _buildTransition(
+                context, animation, secondaryAnimation, child, 2);
+          },
+        ),
       ),
       GoRoute(
-        path: "/task",
-        builder: (context, state) => const TaskPage(),
+        path: '/task',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const TaskPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return _buildTransition(
+                context, animation, secondaryAnimation, child, 3);
+          },
+        ),
       ),
       GoRoute(
-        path: "/account",
-        builder: (context, state) => const AssignmentPage(),
+        path: '/account',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const AccountsPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return _buildTransition(
+                context, animation, secondaryAnimation, child, 4);
+          },
+        ),
       ),
     ],
   );
+
+  Widget _buildTransition(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child, int targetPageIndex) {
+    Offset beginOffset;
+    if (targetPageIndex > _currentPageIndex) {
+      beginOffset = const Offset(1.0, 0.0); // slide in from the right
+    } else {
+      beginOffset = const Offset(-1.0, 0.0); // slide in from the left
+    }
+    _currentPageIndex = targetPageIndex;
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: beginOffset,
+        end: Offset.zero,
+      ).animate(CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeInOut,
+      )),
+      child: child,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
