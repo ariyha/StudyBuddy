@@ -3,72 +3,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:studybuddy/navbar.dart';
 
-class AssignmentPage extends StatefulWidget {
-  const AssignmentPage({super.key});
+class TaskPage extends StatefulWidget {
+  const TaskPage({super.key});
 
   @override
-  State<AssignmentPage> createState() => _AssignmentPageState();
+  State<TaskPage> createState() => _TaskPageState();
 }
 
-class _AssignmentPageState extends State<AssignmentPage> {
-  final GlobalKey<_AnimatedDropdownState> _dropdownKey =
-      GlobalKey<_AnimatedDropdownState>();
+class _TaskPageState extends State<TaskPage> {
+  final List<String> statusOptions = ['Pending', 'In Progress', 'Completed'];
+  String dropdownvalue = 'Choose group';
 
-  String dropdownvalue = 'Item 1';
-
-  List<Map<String, String>> userList = [
+  List<Map<String, String>> tasklist = [
+    {"name": "JpElvQGQfHQmtChAJ", "status": "0", "assigned to": "Marian Wells"},
+    {"name": "HAbLDB", "status": "1", "assigned to": "Linnie Green"},
+    {"name": "OjBFaKyT", "status": "0", "assigned to": "Edna Bryant"},
     {
-      "name": "oNBisXaejQrgt",
-      "date": "1/22/2058",
+      "name": "GrgEvlhTyWrxXgkLbOoz",
+      "status": "2",
+      "assigned to": "Stephen Neal"
     },
+    {"name": "MJDHHmvr", "status": "1", "assigned to": "Alan Bowman"},
+    {"name": "LSNZCCuZAGyb", "status": "2", "assigned to": "Jeffery Welch"},
+    {"name": "abfxD", "status": "0", "assigned to": "Nannie Fox"},
+    {"name": "KBznVvwwp", "status": "0", "assigned to": "James Cross"},
     {
-      "name": "sWTOldbzqeCTHbEEyM",
-      "date": "12/21/2046",
+      "name": "lJcxFqqWljmUgOLxp",
+      "status": "1",
+      "assigned to": "Inez Maldonado"
     },
+    {"name": "sXUtWNTRq", "status": "0", "assigned to": "Bill Jenkins"},
     {
-      "name": "jaudGdgRlo",
-      "date": "11/11/2069",
+      "name": "nDjFRxltOTMvCzHaoTc",
+      "status": "1",
+      "assigned to": "Stella Murray"
     },
-    {
-      "name": "qiZabZ",
-      "date": "5/6/2080",
-    },
-    {
-      "name": "QpFDCTrFHGWpwFzuohic",
-      "date": "12/3/2108",
-    },
-    {
-      "name": "lmJipfOdMxwUCgRZxNvo",
-      "date": "12/16/2075",
-    },
-    {
-      "name": "dZxDEdZJKAZBPQ",
-      "date": "1/25/2106",
-    },
-    {
-      "name": "uqQRrYO",
-      "date": "10/2/2065",
-    },
-    {
-      "name": "sunEpeDxn",
-      "date": "7/9/2096",
-    },
-    {
-      "name": "gRLPDtyreRalbvlxsoKr",
-      "date": "5/1/2106",
-    },
-    {
-      "name": "mTxxQVIZD",
-      "date": "8/3/2082",
-    },
-    {
-      "name": "roavCYpNSfOsM",
-      "date": "5/24/2102",
-    },
+    {"name": "CsrexaVKOB", "status": "2", "assigned to": "Trevor Norton"},
   ];
 
   // List of items in our dropdown menu
   var items = [
+    'Choose group',
     'Item 1',
     'Item 2',
     'Item 3',
@@ -78,17 +53,6 @@ class _AssignmentPageState extends State<AssignmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    var dropdownwidget = AnimatedDropdown<String>(
-      key: _dropdownKey,
-      items: items,
-      value: 'Choose',
-      onChanged: (newValue) {
-        setState(() {
-          dropdownvalue = newValue!;
-        });
-      },
-      itemBuilder: (item) => Text(item),
-    );
     return Scaffold(
       floatingActionButton: ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -100,12 +64,15 @@ class _AssignmentPageState extends State<AssignmentPage> {
             setState(() {
               items.add('Item ${items.length + 1}');
             });
-            _dropdownKey.currentState?.closeDropdown(); // Add this line
           }),
-      bottomNavigationBar: Hero(tag: 'navbar', child: NavBar()),
+      bottomNavigationBar: Hero(
+          tag: 'navbar',
+          child: NavBar(
+            currentPageIndex: 3,
+          )),
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
-        title: const Text("Assignments"),
+        title: const Text("Tasks"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -116,35 +83,55 @@ class _AssignmentPageState extends State<AssignmentPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AnimatedDropdown<String>(
-                    key: _dropdownKey,
-                    items: items,
-                    value: 'Choose',
-                    onChanged: (newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                      });
-                    },
-                    itemBuilder: (item) => Text(item,
-                        style: Theme.of(context).primaryTextTheme.labelLarge),
+                  Container(
+                    width: 200,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.background,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: DropdownButton<String>(
+                      value: dropdownvalue,
+                      icon:
+                          const Icon(Icons.keyboard_double_arrow_down_rounded),
+                      iconSize: 24,
+                      elevation: 16,
+                      isExpanded: true,
+                      style: Theme.of(context).primaryTextTheme.labelLarge,
+                      underline: Container(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownvalue = newValue!;
+                        });
+                      },
+                      items:
+                          items.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(value),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shape: const CircleBorder(),
                       ),
                       child: Icon(Icons.add, size: 30),
-                      onPressed: () {
-                        _dropdownKey.currentState
-                            ?.closeDropdown(); // Add this line
-                      })
+                      onPressed: () {})
                 ],
               ),
             ]),
             Expanded(
               child: ListView.builder(
-                itemCount: userList.length,
+                itemCount: tasklist.length,
                 itemBuilder: (context, index) {
-                  final user = userList[index];
+                  final task = tasklist[index];
                   return Container(
                     decoration: BoxDecoration(
                       border: Border(
@@ -155,14 +142,31 @@ class _AssignmentPageState extends State<AssignmentPage> {
                     child: ListTile(
                       leading: Icon(Icons.assignment_rounded),
                       title: Text(
-                        user['name']!,
+                        task['name']!,
                         style: Theme.of(context).primaryTextTheme.labelLarge,
                       ),
                       subtitle: Text(
-                        user['date']!,
+                        task['assigned to']!,
                         style: Theme.of(context).primaryTextTheme.labelSmall,
                       ),
-                      trailing: Icon(Icons.chevron_right, color: Colors.grey),
+                      trailing: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: statusOptions[int.parse(task['status']!)],
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              task['status'] =
+                                  statusOptions.indexOf(newValue!).toString();
+                            });
+                          },
+                          items: statusOptions
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                     ),
@@ -171,145 +175,6 @@ class _AssignmentPageState extends State<AssignmentPage> {
               ),
             )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class AnimatedDropdown<T> extends StatefulWidget {
-  final List<T> items;
-  final T value;
-  final ValueChanged<T?> onChanged;
-  final Widget Function(T) itemBuilder;
-
-  const AnimatedDropdown({
-    required Key key,
-    required this.items,
-    required this.value,
-    required this.onChanged,
-    required this.itemBuilder,
-  }) : super(key: key);
-
-  @override
-  _AnimatedDropdownState<T> createState() => _AnimatedDropdownState<T>();
-}
-
-class _AnimatedDropdownState<T> extends State<AnimatedDropdown<T>>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  final LayerLink _layerLink = LayerLink();
-  OverlayEntry? _overlayEntry;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _overlayEntry?.remove();
-    super.dispose();
-  }
-
-  void _toggleDropdown() {
-    if (_overlayEntry == null) {
-      _overlayEntry = _createOverlayEntry();
-      Overlay.of(context).insert(_overlayEntry!);
-      _controller.forward();
-    } else {
-      _controller.reverse().then((_) {
-        _overlayEntry?.remove();
-        _overlayEntry = null;
-      });
-    }
-  }
-
-  void closeDropdown() {
-    if (_overlayEntry != null) {
-      _controller.reverse().then((_) {
-        _overlayEntry?.remove();
-        _overlayEntry = null;
-      });
-    }
-  }
-
-  OverlayEntry _createOverlayEntry() {
-    RenderBox renderBox = context.findRenderObject() as RenderBox;
-    var size = renderBox.size;
-
-    return OverlayEntry(
-      builder: (context) => Positioned(
-        width: size.width,
-        child: CompositedTransformFollower(
-          link: _layerLink,
-          showWhenUnlinked: false,
-          offset: Offset(0.0, size.height),
-          child: Material(
-            elevation: 8,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: 400,
-                maxWidth: size.width,
-              ),
-              child: SizeTransition(
-                sizeFactor: _animation,
-                child: Scrollbar(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: widget.items
-                          .map((item) => ListTile(
-                                title: widget.itemBuilder(item),
-                                onTap: () {
-                                  widget.onChanged(item);
-                                  _toggleDropdown();
-                                },
-                              ))
-                          .toList(),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: InkWell(
-        onTap: _toggleDropdown,
-        splashFactory: NoSplash.splashFactory, // This removes the splash effect
-        highlightColor: Colors.transparent,
-        child: Container(
-          width: 200,
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              widget.itemBuilder(widget.value),
-              Icon(Icons.keyboard_double_arrow_down_outlined),
-            ],
-          ),
         ),
       ),
     );

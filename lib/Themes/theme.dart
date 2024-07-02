@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final theme = ThemeData(
+  splashColor: Colors.transparent,
   scaffoldBackgroundColor: const Color.fromARGB(255, 17, 30, 34),
   primaryColor: const Color.fromARGB(255, 75, 152, 108),
   colorScheme: const ColorScheme(
