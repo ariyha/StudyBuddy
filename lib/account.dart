@@ -14,11 +14,6 @@ class AccountsPage extends StatefulWidget {
 
 class _AccountsPageState extends State<AccountsPage> {
   // Dummy user data
-  final Map<String, String> userData = {
-    'name': 'John Doe',
-    'email': 'john.doe@example.com',
-    'role': 'Student',
-  };
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +75,7 @@ class _AccountsPageState extends State<AccountsPage> {
                     SizedBox(height: 30),
                     AccountInfoTile(
                       title: 'Role',
-                      value: userData['role']!,
+                      value: 'admin',
                       icon: Icons.school,
                     ),
                     AccountInfoTile(
