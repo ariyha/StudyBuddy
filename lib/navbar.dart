@@ -19,7 +19,7 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
-    var items = ['/', '/assignment', '/test', '/task', '/account'];
+    var items = ['/home', '/assignment', '/test', '/task', '/account'];
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0, left: 8.0, right: 8.0),
       child: ClipRRect(

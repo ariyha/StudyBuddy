@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studybuddy/navbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,89 +22,102 @@ class _AccountsPageState extends State<AccountsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Account'),
-        actions: [
-          IconButton(
-            icon: Hero(tag: 'accounticon', child: Icon(Icons.person)),
-            onPressed: () {
-              _showAboutDialog(context);
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: Icon(
-                    Icons.person,
-                    size: 60,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          User? user = snapshot.data;
+          String displayName = user?.displayName ?? 'User';
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Account'),
+              actions: [
+                IconButton(
+                  icon: Hero(tag: 'accounticon', child: Icon(Icons.person)),
+                  onPressed: () {
+                    _showAboutDialog(context);
+                  },
+                ),
+              ],
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: Icon(
+                          Icons.person,
+                          size: 60,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Center(
+                      child: Text(
+                        displayName,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Center(
+                      child: Text(
+                        user!.email ?? 'email id',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Center(
+                      child: Text(
+                        user!.uid ?? 'email id',
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    AccountInfoTile(
+                      title: 'Role',
+                      value: userData['role']!,
+                      icon: Icons.school,
+                    ),
+                    AccountInfoTile(
+                      title: 'Tasks Completed',
+                      value: '15',
+                      icon: Icons.task_alt,
+                    ),
+                    SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        // TODO: Implement edit profile functionality
+                      },
+                      child: Text('Request for Admin'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(double.infinity, 50),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    OutlinedButton(
+                      onPressed: () {
+                        _signOut(context);
+                      },
+                      child: Text('Logout'),
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: Size(double.infinity, 50),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 20),
-              Center(
-                child: Text(
-                  userData['name']!,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              ),
-              SizedBox(height: 10),
-              Center(
-                child: Text(
-                  userData['email']!,
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-              ),
-              SizedBox(height: 30),
-              AccountInfoTile(
-                title: 'Role',
-                value: userData['role']!,
-                icon: Icons.school,
-              ),
-              AccountInfoTile(
-                title: 'Tasks Completed',
-                value: '15',
-                icon: Icons.task_alt,
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  // TODO: Implement edit profile functionality
-                },
-                child: Text('Request for Admin'),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                ),
-              ),
-              SizedBox(height: 10),
-              OutlinedButton(
-                onPressed: () {
-                  // TODO: Implement logout functionality
-                },
-                child: Text('Logout'),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Hero(
-          tag: 'navbar',
-          child:
-              NavBar(currentPageIndex: 4)), // Assuming Accounts is the 5th item
-    );
+            ),
+            bottomNavigationBar: Hero(
+                tag: 'navbar',
+                child: NavBar(
+                    currentPageIndex: 4)), // Assuming Accounts is the 5th item
+          );
+        });
   }
 
   void _showAboutDialog(BuildContext context) {
@@ -187,6 +203,18 @@ class _AccountsPageState extends State<AccountsPage> {
         ),
       ),
     ));
+  }
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      context.go('/');
+      await FirebaseAuth.instance.signOut();
+      // Optionally, you can sign out from Google Sign-In as well
+      await GoogleSignIn().signOut();
+    } catch (e) {
+      print(e);
+      // Handle sign-out errors here
+    }
   }
 
   void _launchURL(String url) async {

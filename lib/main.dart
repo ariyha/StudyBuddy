@@ -1,13 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:studybuddy/Themes/theme.dart';
 import 'package:studybuddy/account.dart';
 import 'package:studybuddy/assignment.dart';
+import 'package:studybuddy/firebase_options.dart';
 import 'package:studybuddy/home.dart';
+import 'package:studybuddy/login_page.dart';
 import 'package:studybuddy/task.dart';
 import 'package:studybuddy/test.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
@@ -23,6 +31,17 @@ class _MyAppState extends State<MyApp> {
     routes: [
       GoRoute(
         path: '/',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: LoginPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return _buildTransition(
+                context, animation, secondaryAnimation, child, 0);
+          },
+        ),
+      ),
+      GoRoute(
+        path: '/home',
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
           child: const HomePage(),
@@ -83,7 +102,7 @@ class _MyAppState extends State<MyApp> {
       Animation<double> secondaryAnimation, Widget child, int targetPageIndex) {
     Offset beginOffset;
     if (targetPageIndex > _currentPageIndex) {
-      beginOffset = const Offset(1.0, 0.0); // slide in from the right
+      beginOffset = const Offset(1.0, 0.0);
     } else {
       beginOffset = const Offset(-1.0, 0.0); // slide in from the left
     }
