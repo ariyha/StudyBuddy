@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:studybuddy/navbar.dart';
 import 'package:clean_calendar/clean_calendar.dart';
 
@@ -73,8 +72,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            UpcomingAssignments(),
-            UpcomingAssignments(),
+            const UpcomingAssignments(),
+            const UpcomingAssignments(),
           ],
         ),
       ),
@@ -87,10 +86,10 @@ class SummaryContainer extends StatelessWidget {
   final String subtitle;
 
   const SummaryContainer({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +136,8 @@ class SummaryContainer extends StatelessWidget {
 }
 
 class UpcomingAssignments extends StatelessWidget {
+  const UpcomingAssignments({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Mock data for upcoming assignments (replace with actual data)
@@ -149,12 +150,12 @@ class UpcomingAssignments extends StatelessWidget {
     ];
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             spreadRadius: 1,
             blurRadius: 5,
@@ -169,9 +170,9 @@ class UpcomingAssignments extends StatelessWidget {
             "Upcoming Assignments",
             style: Theme.of(context).primaryTextTheme.titleMedium,
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Divider(color: Theme.of(context).colorScheme.onTertiary, height: 1),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: assignments.map((assignment) {
@@ -180,14 +181,14 @@ class UpcomingAssignments extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Theme.of(context).colorScheme.primary,
                       ),
-                      child: Icon(Icons.assignment, color: Colors.white),
+                      child: const Icon(Icons.assignment, color: Colors.white),
                     ),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -195,7 +196,7 @@ class UpcomingAssignments extends StatelessWidget {
                           assignment,
                           style: Theme.of(context).primaryTextTheme.titleMedium,
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           "Due Date: July 15, 2024", // Replace with actual due date
                           style: Theme.of(context).primaryTextTheme.labelMedium,

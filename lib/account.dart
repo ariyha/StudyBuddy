@@ -6,7 +6,7 @@ import 'package:studybuddy/navbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AccountsPage extends StatefulWidget {
-  const AccountsPage({Key? key}) : super(key: key);
+  const AccountsPage({super.key});
 
   @override
   _AccountsPageState createState() => _AccountsPageState();
@@ -24,10 +24,10 @@ class _AccountsPageState extends State<AccountsPage> {
           String displayName = user?.displayName ?? 'User';
           return Scaffold(
             appBar: AppBar(
-              title: Text('Account'),
+              title: const Text('Account'),
               actions: [
                 IconButton(
-                  icon: Hero(tag: 'accounticon', child: Icon(Icons.person)),
+                  icon: const Hero(tag: 'accounticon', child: Icon(Icons.person)),
                   onPressed: () {
                     _showAboutDialog(context);
                   },
@@ -51,57 +51,57 @@ class _AccountsPageState extends State<AccountsPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Center(
                       child: Text(
                         displayName,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Center(
                       child: Text(
                         user!.email ?? 'email id',
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Center(
                       child: Text(
-                        user!.uid ?? 'email id',
-                        style: Theme.of(context).textTheme.subtitle1,
+                        user.uid ?? 'email id',
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
-                    SizedBox(height: 30),
-                    AccountInfoTile(
+                    const SizedBox(height: 30),
+                    const AccountInfoTile(
                       title: 'Role',
                       value: 'admin',
                       icon: Icons.school,
                     ),
-                    AccountInfoTile(
+                    const AccountInfoTile(
                       title: 'Tasks Completed',
                       value: '15',
                       icon: Icons.task_alt,
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
                         // TODO: Implement edit profile functionality
                       },
-                      child: Text('Request for Admin'),
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
+                        minimumSize: const Size(double.infinity, 50),
                       ),
+                      child: const Text('Request for Admin'),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     OutlinedButton(
                       onPressed: () {
                         _signOut(context);
                       },
-                      child: Text('Logout'),
                       style: OutlinedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
+                        minimumSize: const Size(double.infinity, 50),
                       ),
+                      child: const Text('Logout'),
                     ),
                   ],
                 ),
@@ -119,7 +119,7 @@ class _AccountsPageState extends State<AccountsPage> {
     Navigator.of(context).push(PopupRoute(
       page: Dialog(
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
           child: SingleChildScrollView(
             child: Padding(
@@ -132,7 +132,7 @@ class _AccountsPageState extends State<AccountsPage> {
                     style: Theme.of(context).primaryTextTheme.bodySmall,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   CircleAvatar(
                     radius: 50,
                     backgroundColor: Theme.of(context).primaryColor,
@@ -145,48 +145,48 @@ class _AccountsPageState extends State<AccountsPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     'Nithish "Bug Creator" Ariyha',
                     style: Theme.of(context).primaryTextTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     'Professional Googler & Stack Overflow Researcher',
                     style: Theme.of(context).primaryTextTheme.labelMedium,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Skills: Turning coffee into code, debugging by talking to rubber ducks, and mastering the art of "It works on my machine!"',
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20),
-                  Text(
+                  const SizedBox(height: 20),
+                  const Text(
                     'Warning: Approaching this developer with a bug report may result in sudden caffeine intake and mumbled curses.',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        child: Text('GitHub'),
+                        child: const Text('GitHub'),
                         onPressed: () =>
                             _launchURL('https://github.com/ariyha'),
                       ),
                       ElevatedButton(
-                        child: Text('LinkedIn'),
+                        child: const Text('LinkedIn'),
                         onPressed: () =>
                             _launchURL('https://linkedin.com/in/nithishariyha'),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextButton(
-                    child: Text('Close'),
+                    child: const Text('Close'),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -227,11 +227,11 @@ class AccountInfoTile extends StatelessWidget {
   final IconData icon;
 
   const AccountInfoTile({
-    Key? key,
+    super.key,
     required this.title,
     required this.value,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -240,7 +240,7 @@ class AccountInfoTile extends StatelessWidget {
       title: Text(title),
       trailing: Text(
         value,
-        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
       ),

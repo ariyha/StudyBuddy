@@ -4,6 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'home.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
@@ -21,11 +23,11 @@ class LoginPage extends StatelessWidget {
                       'Welcome',
                       style: Theme.of(context).primaryTextTheme.displayLarge,
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
-                        minimumSize: Size(double.infinity, 50),
+                        minimumSize: const Size(double.infinity, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
@@ -33,7 +35,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () async {
                         await _signInWithGoogle(context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.g_mobiledata,
                         color: Colors.white,
                         size: 30,
@@ -42,11 +44,11 @@ class LoginPage extends StatelessWidget {
                           style:
                               Theme.of(context).primaryTextTheme.titleMedium),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF2A9D8F),
-                        minimumSize: Size(double.infinity, 50),
+                        backgroundColor: const Color(0xFF2A9D8F),
+                        minimumSize: const Size(double.infinity, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
@@ -54,7 +56,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         // Navigate to email sign in page
                       },
-                      icon: Icon(Icons.email, color: Colors.white),
+                      icon: const Icon(Icons.email, color: Colors.white),
                       label: Text('Sign in with Email',
                           style:
                               Theme.of(context).primaryTextTheme.titleMedium),
@@ -65,7 +67,7 @@ class LoginPage extends StatelessWidget {
             ),
           );
         }
-        return HomePage();
+        return const HomePage();
       },
     );
   }
@@ -97,29 +99,31 @@ class EmailSignInPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  EmailSignInPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sign in with Email')),
+      appBar: AppBar(title: const Text('Sign in with Email')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 await _signInWithEmailAndPassword(context);
               },
-              child: Text('Sign In'),
+              child: const Text('Sign In'),
             ),
           ],
         ),
@@ -138,7 +142,7 @@ class EmailSignInPage extends StatelessWidget {
       );
 
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } catch (e) {
       print(e);

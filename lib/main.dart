@@ -16,10 +16,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -33,7 +35,7 @@ class _MyAppState extends State<MyApp> {
         path: '/',
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
-          child: LoginPage(),
+          child: const LoginPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return _buildTransition(
                 context, animation, secondaryAnimation, child, 0);

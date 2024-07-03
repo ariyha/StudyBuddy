@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:studybuddy/navbar.dart';
 
 class TaskPage extends StatefulWidget {
@@ -56,10 +54,10 @@ class _TaskPageState extends State<TaskPage> {
     return Scaffold(
       floatingActionButton: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            shape: CircleBorder(),
-            padding: EdgeInsets.all(20), // Button color
+            shape: const CircleBorder(),
+            padding: const EdgeInsets.all(20), // Button color
           ),
-          child: Icon(Icons.add, size: 30),
+          child: const Icon(Icons.add, size: 30),
           onPressed: () {
             setState(() {
               items.add('Item ${items.length + 1}');
@@ -85,7 +83,7 @@ class _TaskPageState extends State<TaskPage> {
                 children: [
                   Container(
                     width: 200,
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.background,
                       borderRadius: BorderRadius.circular(10),
@@ -122,7 +120,7 @@ class _TaskPageState extends State<TaskPage> {
                       style: ElevatedButton.styleFrom(
                         shape: const CircleBorder(),
                       ),
-                      child: Icon(Icons.add, size: 30),
+                      child: const Icon(Icons.add, size: 30),
                       onPressed: () {})
                 ],
               ),
@@ -140,7 +138,7 @@ class _TaskPageState extends State<TaskPage> {
                       ),
                     ),
                     child: ListTile(
-                      leading: Icon(Icons.assignment_rounded),
+                      leading: const Icon(Icons.assignment_rounded),
                       title: Text(
                         task['name']!,
                         style: Theme.of(context).primaryTextTheme.labelLarge,
@@ -168,7 +166,7 @@ class _TaskPageState extends State<TaskPage> {
                         ),
                       ),
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                          const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                     ),
                   );
                 },

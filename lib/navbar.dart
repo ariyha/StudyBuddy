@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+// ignore: must_be_immutable
 class NavBar extends StatefulWidget {
   int currentPageIndex = 0;
 

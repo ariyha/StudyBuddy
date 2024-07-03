@@ -20,14 +20,14 @@ final theme = ThemeData(
     brightness: Brightness.dark,
   ),
   primaryTextTheme: TextTheme(
-    displayLarge: GoogleFonts.urbanist(textStyle: TextStyle(fontSize: 52)),
-    displayMedium: GoogleFonts.urbanist(textStyle: TextStyle(fontSize: 44)),
+    displayLarge: GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 52)),
+    displayMedium: GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 44)),
     displaySmall: GoogleFonts.urbanist(
         textStyle: const TextStyle(fontSize: 36, fontWeight: FontWeight.w600)),
-    headlineLarge: GoogleFonts.urbanist(textStyle: TextStyle(fontSize: 36)),
+    headlineLarge: GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 36)),
     headlineMedium: GoogleFonts.urbanist(
         textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
-    headlineSmall: GoogleFonts.urbanist(textStyle: TextStyle(fontSize: 24)),
+    headlineSmall: GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 24)),
     titleLarge: GoogleFonts.urbanist(
         textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
     titleMedium: GoogleFonts.plusJakartaSans(
@@ -49,10 +49,10 @@ final theme = ThemeData(
   ),
   navigationBarTheme: NavigationBarThemeData(
     height: 65,
-    backgroundColor: Color.fromARGB(255, 17, 30, 34),
-    indicatorColor: Color.fromARGB(255, 42, 157, 143),
+    backgroundColor: const Color.fromARGB(255, 17, 30, 34),
+    indicatorColor: const Color.fromARGB(255, 42, 157, 143),
     iconTheme: MaterialStateProperty.all(
-      IconThemeData(color: Colors.white),
+      const IconThemeData(color: Colors.white),
     ),
     labelTextStyle: MaterialStateProperty.all(
       const TextStyle(
@@ -60,7 +60,7 @@ final theme = ThemeData(
     ),
   ),
   appBarTheme: AppBarTheme(
-    backgroundColor: Color.fromARGB(255, 17, 30, 34),
+    backgroundColor: const Color.fromARGB(255, 17, 30, 34),
     elevation: 0, // Flat app bar
     centerTitle: false, // Align title to the left
     titleTextStyle: GoogleFonts.urbanist(
@@ -85,6 +85,8 @@ final theme = ThemeData(
 );
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

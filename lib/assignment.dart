@@ -41,10 +41,10 @@ class _AssignmentPageState extends State<AssignmentPage> {
     return Scaffold(
       floatingActionButton: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          shape: CircleBorder(),
-          padding: EdgeInsets.all(20),
+          shape: const CircleBorder(),
+          padding: const EdgeInsets.all(20),
         ),
-        child: Icon(Icons.add, size: 30),
+        child: const Icon(Icons.add, size: 30),
         onPressed: () {
           setState(() {
             items.add('Item ${items.length}');
@@ -71,7 +71,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
               children: [
                 Container(
                   width: 200,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.background,
                     borderRadius: BorderRadius.circular(10),
@@ -106,7 +106,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
                   ),
-                  child: Icon(Icons.add, size: 30),
+                  child: const Icon(Icons.add, size: 30),
                   onPressed: () {
                     // Add functionality here
                   },
@@ -126,7 +126,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
                       ),
                     ),
                     child: ListTile(
-                      leading: Icon(Icons.book_rounded),
+                      leading: const Icon(Icons.book_rounded),
                       title: Text(
                         user['name']!,
                         style: Theme.of(context).primaryTextTheme.labelLarge,
@@ -135,9 +135,9 @@ class _AssignmentPageState extends State<AssignmentPage> {
                         user['date']!,
                         style: Theme.of(context).primaryTextTheme.labelSmall,
                       ),
-                      trailing: Icon(Icons.chevron_right, color: Colors.grey),
+                      trailing: const Icon(Icons.chevron_right, color: Colors.grey),
                       contentPadding:
-                          EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                          const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                     ),
                   );
                 },
