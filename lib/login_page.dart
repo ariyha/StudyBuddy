@@ -15,8 +15,6 @@ class LoginPage extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          var db = FirebaseFirestore.instance;
-
           return Scaffold(
             body: Center(
               child: Padding(

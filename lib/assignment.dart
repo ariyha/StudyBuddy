@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ class AssignmentPage extends StatefulWidget {
 class _AssignmentPageState extends State<AssignmentPage> {
   List<String> items = [];
   String dropdownvalue = 'Choose class';
+  List UserIDs = [];
 
   List<Map<String, String>> userList = [
     {"name": "oNBisXaejQrgt", "date": "1/22/2058"},
@@ -46,8 +46,101 @@ class _AssignmentPageState extends State<AssignmentPage> {
     });
   }
 
+  void getUsers() async {
+    var db = FirebaseFirestore.instance;
+    var uid = FirebaseAuth.instance.currentUser!.uid;
+
+    var coll = await db.collection('users').get();
+    UserIDs = coll.docs.map((doc) {
+      var data = doc.data();
+      return {"ID": doc.id, "name": data['displayName'], "chosen": false};
+    }).toList();
+  }
+
+  void _showClassesFormDialog(BuildContext context) {
+    String ClassName = '';
+    String Description = '';
+    String admin = FirebaseAuth.instance.currentUser!.uid;
+    getUsers();
+    print(UserIDs);
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text('Add Class'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    decoration:
+                        const InputDecoration(labelText: 'Assignment Name'),
+                    onSaved: (value) => ClassName = value!,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter an assignment name';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Description'),
+                    onSaved: (value) => Description = value!,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter an assignment name';
+                      }
+                      return null;
+                    },
+                  ),
+                  DropdownButton(
+                    items: UserIDs.map((e) => DropdownMenuItem(
+                        value: e['ID'],
+                        child: Row(
+                          children: [
+                            Checkbox(
+                                value: e['chosen'],
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    e['chosen'] = !e['chosen'];
+                                  });
+                                }),
+                            Text(e['name']),
+                          ],
+                        ))).toList(),
+                    onChanged: (value) {},
+                    isDense: true,
+                    isExpanded: true,
+                    value: null,
+                    selectedItemBuilder: (BuildContext context) {
+                      return UserIDs.map<Widget>((e) {
+                        return Text(e['ID']);
+                      }).toList();
+                    },
+                    icon: const Icon(Icons.arrow_drop_down),
+                    iconSize: 24,
+                    elevation: 16,
+                  ),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Add'),
+                ),
+              ],
+            ));
+  }
+
   void _showAssignmentFormDialog(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     String assignmentName = '';
     DateTime? endDate;
     String description = '';
@@ -65,19 +158,20 @@ class _AssignmentPageState extends State<AssignmentPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Form(
-                      key: _formKey,
+                      key: formKey,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
                             'New Assignment',
-                            style: Theme.of(context).primaryTextTheme.headline6,
+                            style:
+                                Theme.of(context).primaryTextTheme.titleLarge,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 20),
                           TextFormField(
-                            decoration:
-                                InputDecoration(labelText: 'Assignment Name'),
+                            decoration: const InputDecoration(
+                                labelText: 'Assignment Name'),
                             onSaved: (value) => assignmentName = value!,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -88,7 +182,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
                           ),
                           const SizedBox(height: 20),
                           TextFormField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'End Date',
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
@@ -121,7 +215,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
                           const SizedBox(height: 20),
                           TextFormField(
                             decoration:
-                                InputDecoration(labelText: 'Description'),
+                                const InputDecoration(labelText: 'Description'),
                             maxLines: 3,
                             onSaved: (value) => description = value!,
                             validator: (value) {
@@ -138,8 +232,8 @@ class _AssignmentPageState extends State<AssignmentPage> {
                               ElevatedButton(
                                 child: const Text('Submit'),
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
+                                  if (formKey.currentState!.validate()) {
+                                    formKey.currentState!.save();
                                     // Handle form submission logic
                                     print('Assignment Name: $assignmentName');
                                     print('End Date: $endDate');
@@ -184,8 +278,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
             child: const Icon(Icons.add, size: 30),
             onPressed: () {
               setState(() {
-                items.add('Item ${items.length}');
-                print(items);
+                _showAssignmentFormDialog(context);
               });
             },
           ),
@@ -248,7 +341,9 @@ class _AssignmentPageState extends State<AssignmentPage> {
                       ),
                       child: const Icon(Icons.add, size: 30),
                       onPressed: () {
-                        _showAssignmentFormDialog(context);
+                        setState(() {
+                          _showClassesFormDialog(context);
+                        });
                       },
                     )
                   ],

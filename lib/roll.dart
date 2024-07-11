@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RickRollPage extends StatefulWidget {
+  const RickRollPage({super.key});
+
   @override
   _RickRollPageState createState() => _RickRollPageState();
 }
@@ -15,9 +17,9 @@ class _RickRollPageState extends State<RickRollPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rolling in'),
+        title: const Text('Rolling in'),
       ),
-      body: Center(
+      body: const Center(
         child: CircularProgressIndicator(),
       ),
     );

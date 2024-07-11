@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studybuddy/navbar.dart';
-import 'package:studybuddy/roll.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AccountsPage extends StatefulWidget {
@@ -72,7 +70,7 @@ class _AccountsPageState extends State<AccountsPage> {
                     const SizedBox(height: 10),
                     Center(
                       child: Text(
-                        user.uid ?? 'email id',
+                        user.uid,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),

@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
         path: '/rickroll',
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
-          child: RickRollPage(),
+          child: const RickRollPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return _buildTransition(
                 context, animation, secondaryAnimation, child, 0);

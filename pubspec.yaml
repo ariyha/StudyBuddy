@@ -44,6 +44,7 @@ dependencies:
   firebase_ui_oauth_google: 
   firebase_ui_auth: 
   cloud_firestore: 
+  uuid: ^4.4.0
 
 dev_dependencies:
   flutter_test:
