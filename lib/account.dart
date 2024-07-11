@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studybuddy/navbar.dart';
+import 'package:studybuddy/roll.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AccountsPage extends StatefulWidget {
@@ -13,6 +15,7 @@ class AccountsPage extends StatefulWidget {
 }
 
 class _AccountsPageState extends State<AccountsPage> {
+  var _tapcount = 0;
   // Dummy user data
 
   @override
@@ -27,7 +30,8 @@ class _AccountsPageState extends State<AccountsPage> {
               title: const Text('Account'),
               actions: [
                 IconButton(
-                  icon: const Hero(tag: 'accounticon', child: Icon(Icons.person)),
+                  icon:
+                      const Hero(tag: 'accounticon', child: Icon(Icons.person)),
                   onPressed: () {
                     _showAboutDialog(context);
                   },
@@ -115,6 +119,16 @@ class _AccountsPageState extends State<AccountsPage> {
         });
   }
 
+  void _handleTap() {
+    setState(() {
+      _tapcount++;
+      if (_tapcount == 5) {
+        _tapcount = 0;
+        context.go('/rickroll');
+      }
+    });
+  }
+
   void _showAboutDialog(BuildContext context) {
     Navigator.of(context).push(PopupRoute(
       page: Dialog(
@@ -133,15 +147,18 @@ class _AccountsPageState extends State<AccountsPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: Hero(
-                      tag: 'accounticon',
-                      child: Icon(
-                        Icons.person,
-                        size: 60,
-                        color: Theme.of(context).colorScheme.onPrimary,
+                  GestureDetector(
+                    onTap: _handleTap,
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: Hero(
+                        tag: 'accounticon',
+                        child: Icon(
+                          Icons.person,
+                          size: 60,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       ),
                     ),
                   ),

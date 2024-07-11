@@ -7,6 +7,7 @@ import 'package:studybuddy/assignment.dart';
 import 'package:studybuddy/firebase_options.dart';
 import 'package:studybuddy/home.dart';
 import 'package:studybuddy/login_page.dart';
+import 'package:studybuddy/roll.dart';
 import 'package:studybuddy/task.dart';
 import 'package:studybuddy/test.dart';
 
@@ -36,6 +37,17 @@ class _MyAppState extends State<MyApp> {
         pageBuilder: (context, state) => CustomTransitionPage(
           key: state.pageKey,
           child: const LoginPage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return _buildTransition(
+                context, animation, secondaryAnimation, child, 0);
+          },
+        ),
+      ),
+      GoRoute(
+        path: '/rickroll',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: RickRollPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return _buildTransition(
                 context, animation, secondaryAnimation, child, 0);
@@ -124,6 +136,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: _router,
       title: 'Flutter Navigation',
       theme: theme,

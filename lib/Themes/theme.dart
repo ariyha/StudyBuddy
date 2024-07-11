@@ -20,14 +20,18 @@ final theme = ThemeData(
     brightness: Brightness.dark,
   ),
   primaryTextTheme: TextTheme(
-    displayLarge: GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 52)),
-    displayMedium: GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 44)),
+    displayLarge:
+        GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 52)),
+    displayMedium:
+        GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 44)),
     displaySmall: GoogleFonts.urbanist(
         textStyle: const TextStyle(fontSize: 36, fontWeight: FontWeight.w600)),
-    headlineLarge: GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 36)),
+    headlineLarge:
+        GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 36)),
     headlineMedium: GoogleFonts.urbanist(
         textStyle: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
-    headlineSmall: GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 24)),
+    headlineSmall:
+        GoogleFonts.urbanist(textStyle: const TextStyle(fontSize: 24)),
     titleLarge: GoogleFonts.urbanist(
         textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
     titleMedium: GoogleFonts.plusJakartaSans(
@@ -83,29 +87,3 @@ final theme = ThemeData(
     ),
   ),
 );
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Modern AppBar'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: const Center(
-        child: Text('Hello, world!'),
-      ),
-    );
-  }
-}

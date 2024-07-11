@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'home.dart';
+import 'dart:developer';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -12,6 +15,8 @@ class LoginPage extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
+          var db = FirebaseFirestore.instance;
+
           return Scaffold(
             body: Center(
               child: Padding(
@@ -87,10 +92,31 @@ class LoginPage extends StatelessWidget {
         idToken: googleAuth.idToken,
       );
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      User? user = userCredential.user;
+      print('\n\n\n\n\n hello \n\n\n\n\n');
+      if (user != null) {
+        await _checkAndCreateUserCollection(user);
+      }
     } catch (e) {
-      print(e);
+      log(e.toString());
       // Handle sign-in errors here
+    }
+  }
+
+  Future<void> _checkAndCreateUserCollection(User user) async {
+    var db = FirebaseFirestore.instance;
+    var userDoc = db.collection('users').doc(user.uid);
+    var docSnapshot = await userDoc.get();
+    if (!docSnapshot.exists) {
+      await userDoc.set({
+        'email': user.email,
+        'displayName': user.displayName,
+        'groups': [],
+        'classes': [],
+      });
     }
   }
 }
@@ -141,9 +167,7 @@ class EmailSignInPage extends StatelessWidget {
         password: password,
       );
 
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+      context.go('/home');
     } catch (e) {
       print(e);
       // Handle sign-in errors here
