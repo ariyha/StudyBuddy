@@ -45,6 +45,7 @@ dependencies:
   firebase_ui_auth: 
   cloud_firestore: 
   uuid: ^4.4.0
+  multi_dropdown: 
 
 dev_dependencies:
   flutter_test:

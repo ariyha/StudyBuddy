@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
 import 'package:studybuddy/navbar.dart';
 
 class AssignmentPage extends StatefulWidget {
@@ -63,6 +64,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
     String admin = FirebaseAuth.instance.currentUser!.uid;
     getUsers();
     print(UserIDs);
+    var selectedUsers = [];
 
     showDialog(
         context: context,
@@ -92,34 +94,16 @@ class _AssignmentPageState extends State<AssignmentPage> {
                       return null;
                     },
                   ),
-                  DropdownButton(
-                    items: UserIDs.map((e) => DropdownMenuItem(
-                        value: e['ID'],
-                        child: Row(
-                          children: [
-                            Checkbox(
-                                value: e['chosen'],
-                                onChanged: (bool? newValue) {
-                                  setState(() {
-                                    e['chosen'] = !e['chosen'];
-                                  });
-                                }),
-                            Text(e['name']),
-                          ],
-                        ))).toList(),
-                    onChanged: (value) {},
-                    isDense: true,
-                    isExpanded: true,
-                    value: null,
-                    selectedItemBuilder: (BuildContext context) {
-                      return UserIDs.map<Widget>((e) {
-                        return Text(e['ID']);
-                      }).toList();
+                  MultiSelectDropDown(
+                    onOptionSelected: (options) {
+                      selectedUsers = options;
+                      debugPrint('$selectedUsers');
                     },
-                    icon: const Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                  ),
+                    fieldBackgroundColor: Theme.of(context).primaryColor,
+                    options: UserIDs.map((e) =>
+                            ValueItem<String>(label: e['name'], value: e['ID']))
+                        .toList(),
+                  )
                 ],
               ),
               actions: <Widget>[
@@ -235,9 +219,6 @@ class _AssignmentPageState extends State<AssignmentPage> {
                                   if (formKey.currentState!.validate()) {
                                     formKey.currentState!.save();
                                     // Handle form submission logic
-                                    print('Assignment Name: $assignmentName');
-                                    print('End Date: $endDate');
-                                    print('Description: $description');
                                     Navigator.of(context).pop();
                                   }
                                 },
